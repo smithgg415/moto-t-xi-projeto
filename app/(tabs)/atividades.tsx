@@ -40,7 +40,7 @@ export default function Activities() {
         <ThemedText style={styles.text}>Acesse suas atividades</ThemedText>
       </ThemedView>
       <ThemedView style={styles.containerActivies}>
-        <ScrollView style={styles.scroll}>
+        <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
           {filteredActivities.map(activity => (
             <TouchableOpacity key={activity.id} style={styles.btn}>
               <ThemedText style={styles.btnText}>{activity.title}</ThemedText>
@@ -61,13 +61,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 22,
-    color: '#333',
+    color: '#fff',
     fontWeight: 'bold',
   },
   activies: {
     marginVertical: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:"transparent"
   },
   containerActivies: {
     backgroundColor: '#ffffff',

@@ -2,10 +2,10 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import DeliveryFood from './(tabs)/deliveryfood';
-import DeliveryPackage from './(tabs)/deliverypackage';
-import MotoTaxi from './(tabs)/mototaxi';
-import Notifications from './(tabs)/notifications';
+import DeliveryFood from './deliveryfood';
+import DeliveryPackage from './deliverypackage';
+import MotoTaxi from './mototaxi';
+import Notifications from './notifications';
 
 const Stack = createStackNavigator();
 

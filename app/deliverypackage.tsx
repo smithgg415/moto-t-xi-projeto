@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, ScrollView, View,  Image, Platform } from 'react-native';
+import { StyleSheet, ScrollView, View } from 'react-native';
 import TopBar from '@/components/TopBar';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';

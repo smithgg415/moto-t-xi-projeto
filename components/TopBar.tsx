@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 
 import { ThemedView } from '@/components/ThemedView';
 export default function TopBar() {
@@ -20,7 +21,6 @@ export default function TopBar() {
 
 const styles = StyleSheet.create({
     topBar: {
-        top: 40,
         width: '100%',
         height: 60,
         backgroundColor: 'yellow',
