@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons';
 
 
 export default function HomeScreen() {
@@ -95,14 +96,17 @@ export default function HomeScreen() {
           </ThemedView>
         </ScrollView>
         <ScrollView horizontal={true} style={{ width: "100%" }} showsHorizontalScrollIndicator={false}>
-          <ThemedView style={styles.item}>
+          <ThemedView style={styles.itemRowTwo}>
             <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
-            </ThemedView>
-          <ThemedView style={styles.item}>
-            
+            <ThemedText style={styles.title}>Adicione até 3 paradas</ThemedText>
+            <ThemedText style={styles.subTextRowTwo}>Precisa parar durante a viagem em algum lugar? Adicione paradas.</ThemedText>
+            <AntDesign name="pluscircleo" size={40} color="black" style={styles.icon} />
           </ThemedView>
-          <ThemedView style={styles.item}>
-
+          <ThemedView style={styles.itemRowTwo}>
+            <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
+            <ThemedText style={styles.title}>Vamos lá?!</ThemedText>
+            <ThemedText style={styles.subTextRowTwo}>Tudo pronto? Agora é só pedir um moto táxi!</ThemedText>
+            <Ionicons name="caret-forward-circle-outline" size={40} color="black" style={styles.icon} />
           </ThemedView>
         </ScrollView>
 
@@ -227,5 +231,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     top: 10,
+  },
+  itemRowTwo: {
+    width: 350,
+    height: 190,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    margin: 10,
+  },
+  subTextRowTwo: {
+    
+    top: -18,
+    fontSize: 15,
+    textAlign: 'justify',
+    padding: 10,
+    color: 'gray',
   }
 });

@@ -11,6 +11,7 @@ export default function MotoTaxi() {
   const [currentLocation, setCurrentLocation] = useState('');
   const [pickupLocation, setPickupLocation] = useState('');
   const [destinationLocation, setDestinationLocation] = useState('');
+  
   const [isModalVisible, setModalVisible] = useState(false);
   const [isConfirmationVisible, setConfirmationVisible] = useState(false);
   const [isAddressMismatchVisible, setAddressMismatchVisible] = useState(false);
