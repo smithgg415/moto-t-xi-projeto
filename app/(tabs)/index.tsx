@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, ScrollView, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import TopBar from '@/components/TopBar';
 import React, { useEffect, useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
@@ -42,7 +42,7 @@ export default function HomeScreen() {
             </MapView>
           </ThemedView>
         )}
-        <ThemedView style={styles.rowServices}>
+        <ScrollView horizontal={true} style={styles.rowServices} showsHorizontalScrollIndicator={false}>
           <ThemedView style={styles.servicesContainer}>
             <TouchableOpacity style={styles.services} onPress={() => navigation.navigate("deliverypackage")}>
               <FontAwesome5 name="box" size={48} color="#cd853f" />
@@ -64,7 +64,7 @@ export default function HomeScreen() {
             <ThemedText style={styles.serviceName}>Entrega</ThemedText>
             <ThemedText style={styles.serviceName}> de Comida</ThemedText>
           </ThemedView>
-        </ThemedView>
+        </ScrollView>
         <ScrollView horizontal={true} style={{ width: "100%" }} showsHorizontalScrollIndicator={false}>
           <ThemedView style={styles.item}>
             <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
@@ -80,10 +80,29 @@ export default function HomeScreen() {
             <Ionicons name="location" size={40} color="black" style={styles.icon} />
           </ThemedView>
           <ThemedView style={styles.item}>
-            <Image source={require('../../assets/images/avaliacao.png')} style={styles.image} />
+            <ImageBackground source={require('../../assets/images/avaliacao.png')} style={styles.image}>
+              <ThemedView style={{ backgroundColor: "transparent", flexDirection: "row", bottom: -55 }}>
+                <Ionicons name="star" size={40} color="yellow" />
+                <Ionicons name="star" size={40} color="yellow" />
+                <Ionicons name="star" size={40} color="yellow" />
+                <Ionicons name="star" size={40} color="yellow" />
+                <Ionicons name="star" size={40} color="yellow" />
+              </ThemedView>
+            </ImageBackground>
             <ThemedText style={styles.title}>Avalie os pilotos</ThemedText>
             <ThemedText style={styles.subText}>Avalie como foi a viagem, nos conte o que você achou.</ThemedText>
             <Ionicons name="people" size={40} color="black" style={styles.icon} />
+          </ThemedView>
+        </ScrollView>
+        <ScrollView horizontal={true} style={{ width: "100%" }} showsHorizontalScrollIndicator={false}>
+          <ThemedView style={styles.item}>
+            <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
+            </ThemedView>
+          <ThemedView style={styles.item}>
+            
+          </ThemedView>
+          <ThemedView style={styles.item}>
+
           </ThemedView>
         </ScrollView>
 
@@ -132,21 +151,24 @@ const styles = StyleSheet.create({
   rowServices: {
     backgroundColor: "transparent",
     flexDirection: 'row',
-    justifyContent: 'space-around',
     marginBottom: 20
   },
   services: {
     margin: 10,
     backgroundColor: 'yellow',
     padding: 15,
-    borderRadius: 10
+    borderRadius: 10,
+    width: 150,
+    height: 100,
+    justifyContent: "center",
+    alignItems: 'center',
   },
   servicesContainer: {
     backgroundColor: "transparent",
   },
   serviceName: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 25,
     color: "white",
     fontWeight: 'bold'
   },
