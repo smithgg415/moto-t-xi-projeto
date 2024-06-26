@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, FlatList, TextInput, Text, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function Chat() {
@@ -19,7 +18,7 @@ export default function Chat() {
     }
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: { id: string, text: string, sender: string } }) => (
     <View style={[styles.messageContainer, item.sender === 'usuario' ? styles.userMessage : styles.motoqueiroMessage]}>
       <ThemedText style={styles.messageText}>{item.text}</ThemedText>
     </View>
