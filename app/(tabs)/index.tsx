@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import { StyleSheet, ScrollView, View, TouchableOpacity, Image, ImageBackground, Touchable } from 'react-native';
 import TopBar from '@/components/TopBar';
 import React, { useEffect, useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
@@ -8,7 +8,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import Fontisto from '@expo/vector-icons/Fontisto';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -30,7 +29,7 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   return (
     <ScrollView style={styles.scrollview}>
-      <StatusBar style="dark" />
+      <StatusBar style="auto" />
       <TopBar />
       <View style={styles.container}>
         {location && (
@@ -96,18 +95,18 @@ export default function HomeScreen() {
           </ThemedView>
         </ScrollView>
         <ScrollView horizontal={true} style={{ width: "100%" }} showsHorizontalScrollIndicator={false}>
-          <ThemedView style={styles.itemRowTwo}>
+          <TouchableOpacity style={styles.itemRowTwo}>
             <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
             <ThemedText style={styles.title}>Adicione até 3 paradas</ThemedText>
             <ThemedText style={styles.subTextRowTwo}>Precisa parar durante a viagem em algum lugar? Adicione paradas.</ThemedText>
             <AntDesign name="pluscircleo" size={40} color="black" style={styles.icon} />
-          </ThemedView>
-          <ThemedView style={styles.itemRowTwo}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.itemRowTwo} onPress={() => navigation.navigate("mototaxi")}>
             <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
             <ThemedText style={styles.title}>Vamos lá?!</ThemedText>
             <ThemedText style={styles.subTextRowTwo}>Tudo pronto? Agora é só pedir um moto táxi!</ThemedText>
             <Ionicons name="caret-forward-circle-outline" size={40} color="black" style={styles.icon} />
-          </ThemedView>
+          </TouchableOpacity>
         </ScrollView>
 
         { /* <ThemedView style={styles.containerPopUp}>
@@ -233,14 +232,14 @@ const styles = StyleSheet.create({
     top: 10,
   },
   itemRowTwo: {
-    width: 350,
+    width: 370,
     height: 190,
     backgroundColor: 'white',
     borderRadius: 20,
     margin: 10,
   },
   subTextRowTwo: {
-    
+
     top: -18,
     fontSize: 15,
     textAlign: 'justify',

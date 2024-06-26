@@ -29,7 +29,7 @@ export default function TabLayout() {
           name="index"
           options={{
             title: 'Home',
-            tabBarIcon: ({ color, focused }) => (
+            tabBarIcon: ({ focused }) => (
               <TabBarIcon name={focused ? 'home' : 'home-outline'} color={"black"} />
             ),
           }}
@@ -38,7 +38,7 @@ export default function TabLayout() {
           name="atividades"
           options={{
             title: 'Atividades',
-            tabBarIcon: ({ color, focused }) => (
+            tabBarIcon: ({ focused }) => (
               <TabBarIcon name={focused ? 'newspaper' : 'newspaper-outline'} color={"black"} />
             ),
           }}
@@ -58,7 +58,7 @@ export default function TabLayout() {
           name="conta"
           options={{
             title: 'Conta',
-            tabBarIcon: ({ color, focused }) => (
+            tabBarIcon: ({ focused }) => (
               <TabBarIcon name={focused ? 'person' : 'person-outline'} color={"black"} />
             ),
           }}

@@ -9,6 +9,9 @@ const paymentData = [
   { id: '1', date: '2023-01-01', description: 'Moto Táxi', amount: 'R$ 14,50' },
   { id: '2', date: '2023-02-26', description: 'Moto Táxi', amount: 'R$ 17,90' },
   { id: '3', date: '2023-12-10', description: 'Entrega de Pacote', amount: 'R$ 11,99' },
+  { id: '4', date: '2023-05-12', description: 'Moto táxi', amount: 'R$ 07,00' },
+  { id: '5', date: '2023-11-23', description: 'Entrega de Pacote', amount: 'R$ 13,89' },
+  { id: '6', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
 
 ];
 
