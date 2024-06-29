@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, FlatList, Image, Platform, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, FlatList, Image, Platform, Button, TouchableOpacity, Animated } from 'react-native';
 import TopBar from '@/components/TopBar';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
 
 interface Payment {
   id: string;
@@ -13,51 +12,17 @@ interface Payment {
   amount: string;
 }
 
-// const paymentData = [
-//   { id: '1', date: '2023-01-01', description: 'Moto Táxi', amount: 'R$ 14,50' },
-//   { id: '2', date: '2023-02-26', description: 'Moto Táxi', amount: 'R$ 17,90' },
-//   { id: '3', date: '2023-12-10', description: 'Entrega de Pacote', amount: 'R$ 11,99' },
-//   { id: '4', date: '2023-05-12', description: 'Moto táxi', amount: 'R$ 07,00' },
-//   { id: '5', date: '2023-11-23', description: 'Entrega de Pacote', amount: 'R$ 13,89' },
-//   { id: '6', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-//   { id: '7', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-//   { id: '8', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-//   { id: '9', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-// ];
 
 const Payments = () => {
 
   const [paymentData, setPaymentData] = useState<Payment[]>([
     { id: '1', date: '2023-01-01', description: 'Moto Táxi', amount: 'R$ 14,50' },
-    { id: '2', date: '2023-02-26', description: 'Moto Táxi', amount: 'R$ 17,90' },
-    { id: '3', date: '2023-12-10', description: 'Entrega de Pacote', amount: 'R$ 11,99' },
-    { id: '4', date: '2023-05-12', description: 'Moto táxi', amount: 'R$ 07,00' },
-    { id: '5', date: '2023-11-23', description: 'Entrega de Pacote', amount: 'R$ 13,89' },
-    { id: '6', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-    { id: '7', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-    { id: '8', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-    { id: '9', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
   ])
-
-  // useEffect(() => {
-  //   setPaymentData([
-  //     { id: '1', date: '2023-01-01', description: 'Moto Táxi', amount: 'R$ 14,50' },
-  //     { id: '2', date: '2023-02-26', description: 'Moto Táxi', amount: 'R$ 17,90' },
-  //     { id: '3', date: '2023-12-10', description: 'Entrega de Pacote', amount: 'R$ 11,99' },
-  //     { id: '4', date: '2023-05-12', description: 'Moto táxi', amount: 'R$ 07,00' },
-  //     { id: '5', date: '2023-11-23', description: 'Entrega de Pacote', amount: 'R$ 13,89' },
-  //     { id: '6', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-  //     { id: '7', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-  //     { id: '8', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-  //     { id: '9', date: '2023-01-25', description: 'Moto Táxi', amount: 'R$ 7,75' },
-  //   ]);
-  // }, []);
-
 
   const addPayment = () => {
     const id = paymentData.length + 1;
     const date = (new Date()).toISOString().split('T')[0];
-    const description = Math.random() < 0.5 ?  'Moto Táxi' : 'Entrega de Pacote';
+    const description = Math.random() < 0.5 ? 'Moto Táxi' : 'Entrega de Pacote';
     const amount = "R$ " + (Math.random() * 100).toFixed(2);
     setPaymentData(oldData => [...oldData, { id: id.toString(), date, description, amount }])
   }
@@ -73,10 +38,9 @@ const Payments = () => {
         <ThemedText style={styles.itemSubText}>{item.date}</ThemedText>
       </View>
       <ThemedText style={styles.itemAmount}>{item.amount}</ThemedText>
-      <TouchableOpacity style={{backgroundColor:"red", padding:5, borderRadius:5, marginLeft:5}} onPress={()=> removePayment(item.id)}>
+      <TouchableOpacity style={{ backgroundColor: "red", padding: 5, borderRadius: 5, marginLeft: 5, alignItems:"center" }} onPress={() => removePayment(item.id)}>
         <ThemedText>
-      <Ionicons name="trash" size={32} color="white" style={styles.icon} />
-
+          <Ionicons name="trash" size={32} color="white" style={styles.icon} />
         </ThemedText>
       </TouchableOpacity>
     </View>
@@ -84,12 +48,18 @@ const Payments = () => {
 
 
 
+
   return (
     <View style={styles.container}>
       <TopBar />
       <ThemedView style={styles.containerText}>
-        <Button onPress={() => { addPayment() }} title="Add" />
         <ThemedText style={styles.text}>Histórico de Pagamentos</ThemedText>
+
+        <ThemedView style={styles.btn}>
+          <TouchableOpacity onPress={() => { addPayment() }} style={styles.buttonAdd}>
+            <Ionicons name="add-circle" size={24} color="#fff" />
+          </TouchableOpacity>
+        </ThemedView>
       </ThemedView>
       <FlatList
         data={paymentData}
@@ -147,6 +117,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  btn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    marginBottom: 10,
+  },
+  buttonAdd: {
+    backgroundColor: '#4F8EF7',
+    borderRadius: 50,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    width: 100,
+  }
 });
 
 export default Payments;

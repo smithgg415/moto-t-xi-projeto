@@ -29,7 +29,6 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   return (
     <ScrollView style={styles.scrollview}>
-      <StatusBar style="auto" />
       <TopBar />
       <View style={styles.container}>
         {location && (
@@ -116,6 +115,8 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </ThemedView>*/}
       </View>
+      <StatusBar style="auto" />
+
     </ScrollView>
   );
 }

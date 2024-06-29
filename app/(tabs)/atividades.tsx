@@ -1,120 +1,154 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { StyleSheet, ScrollView, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
 import TopBar from '@/components/TopBar';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useState } from 'react';
 
+interface Activity {
+    id: string;
+    title: string;
+    date: string;
+}
+
 export default function Activities() {
-  const [selectedDate, setSelectedDate] = useState('');
-  const activities = [
-    { id: 1, title: 'Corrida 1', date: '2022-01-01' },
-    { id: 2, title: 'Corrida 2', date: '2022-01-02' },
-    { id: 3, title: 'Corrida 3', date: '2022-01-03' },
-    { id: 4, title: 'Corrida 4', date: '2022-01-04' },
-    { id: 5, title: 'Corrida 5', date: '2022-01-05' },
-    { id: 6, title: 'Corrida 6', date: '2022-01-06' },
-    { id: 7, title: 'Corrida 7', date: '2002-01-19' },
-  ];
+    const [atividadesData, setAtividadesData] = useState<Activity[]>([
+        { id: "1", title: 'Moto Táxi', date: '2000-03-21' },
+    ]);
 
-  const filteredActivities = activities.filter(activity => {
-    if (!selectedDate) return true;
-    return activity.date === selectedDate;
-  });
+    const addAtividades = () => {
+        const id = (atividadesData.length + 1).toString();
+        const title = Math.random() < 0.5 ? 'Moto Táxi' : 'Entrega de Pacote';
+        const date = (new Date()).toISOString().split('T')[0];
+        setAtividadesData(oldData => [...oldData, { id: id, title, date }]);
+    };
 
-  return (
-    <View style={styles.container}>
-      <TopBar />
-      <ThemedView style={styles.filter}>
-        <TextInput 
-          style={styles.input} 
-          placeholder="Digite a data (YYYY-MM-DD)" 
-          placeholderTextColor="#ccc"
-          value={selectedDate} 
-          onChangeText={setSelectedDate} 
-        />
-        <Ionicons name="search" size={24} color="#fff" style={styles.icon} />
-      </ThemedView>
-      <ThemedView style={styles.activies}>
-        <ThemedText style={styles.text}>Acesse suas atividades</ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.containerActivies}>
-        <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-          {filteredActivities.map(activity => (
-            <TouchableOpacity key={activity.id} style={styles.btn}>
-              <ThemedText style={styles.btnText}>{activity.title}</ThemedText>
-              <ThemedText style={styles.btnText}>{activity.date}</ThemedText>
+    const removeActivity = (id: string) => {
+        setAtividadesData(oldData => oldData.filter(item => item.id !== id));
+    };
+
+    const renderItem = ({ item }: { item: { id: string, title: string, date: string } }) => (
+        <View style={styles.itemContainer}>
+            <Ionicons name="newspaper" size={32} color="black" style={styles.icon} />
+            <View style={styles.itemTextContainer}>
+                <ThemedText style={styles.itemText}>{item.title}</ThemedText>
+                <ThemedText style={styles.itemSubText}>{item.date}</ThemedText>
+            </View>
+            <TouchableOpacity style={{ backgroundColor: "red", padding: 5, borderRadius: 5, marginLeft: 5 }} onPress={() => removeActivity(item.id)}>
+                <ThemedText>
+                    <Ionicons name="trash" size={32} color="white" style={styles.iconTrash} />
+                </ThemedText>
             </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </ThemedView>
-    </View>
-  );
+        </View>
+
+    );
+
+    return (
+        <View style={styles.container}>
+            <TopBar />
+            <ThemedView style={styles.activies}>
+                <ThemedText style={styles.text}>Acesse suas atividades</ThemedText>
+            </ThemedView>
+
+            <ThemedView style={styles.containerAdd}>
+                <TouchableOpacity onPress={addAtividades} style={{width:"100%", justifyContent:"center", alignItems:"center"}}>
+                    <Ionicons name="add-circle" size={24} color="#fff" />
+                </TouchableOpacity>
+            </ThemedView>
+            <ThemedView style={styles.containerActivies}>
+                <FlatList data={atividadesData} renderItem={renderItem} keyExtractor={(item) => item.id} contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false} />
+            </ThemedView>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'gray',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 22,
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  activies: {
-    marginVertical: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:"transparent"
-  },
-  containerActivies: {
-    backgroundColor: '#ffffff',
-    width: '90%',
-    height: '60%',
-    borderRadius: 15,
-    padding: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 5,
-  },
-  btn: {
-    backgroundColor: '#4F8EF7',
-    borderRadius: 10,
-    marginBottom: 15,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  btnText: {
-    fontSize: 18,
-    color: 'white',
-  },
-  scroll: {
-    width: '100%',
-  },
-  icon: {
-    marginLeft: 10,
-  },
-  filter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    marginTop: 50,
-  },
-  input: {
-    height: 40,
-    backgroundColor: '#ffffff',
-    borderColor: '#4F8EF7',
-    borderWidth: 1,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    marginRight: 10,
-    width: '70%',
-  },
-});
 
+    itemContainer: {
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        padding: 15,
+        marginVertical: 8,
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    iconTrash: {
+        marginRight: 10,
+    },
+    itemTextContainer: {
+        flex: 1,
+    },
+    itemText: {
+        fontSize: 18,
+    },
+    itemSubText: {
+        fontSize: 14,
+        color: 'gray',
+    },
+    container: {
+        flex: 1,
+        backgroundColor: 'gray',
+        alignItems: 'center',
+    },
+    text: {
+        top:30,
+        fontSize: 22,
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+    activies: {
+        marginVertical: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: "transparent"
+    },
+    containerActivies: {
+        backgroundColor: '#ffffff',
+        width: '90%',
+        height: '60%',
+        borderRadius: 15,
+        padding: 15,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5,
+        top:30
+    },
+    containerAdd: {
+        width:200,
+        height:50,
+        backgroundColor: '#4F8EF7',
+        borderRadius: 10,
+        marginBottom: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        top:20,
+    },
+    btnText: {
+        fontSize: 18,
+        color: 'white',
+    },
+    scroll: {
+    },
+    icon: {
+        marginRight:20
+    },
+    filter: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+        marginTop: 50,
+    },
+    input: {
+        height: 40,
+        backgroundColor: '#ffffff',
+        borderColor: '#4F8EF7',
+        borderWidth: 1,
+        borderRadius: 20,
+        paddingHorizontal: 10,
+        marginRight: 10,
+        width: '70%',
+    },
+});
