@@ -28,103 +28,105 @@ export default function HomeScreen() {
   }, []);
   const navigation = useNavigation();
   return (
-    <ScrollView style={styles.scrollview}>
-      <TopBar />
-      <View style={styles.container}>
-        {location && (
-          <ThemedView style={styles.containerMap}>
-            <MapView style={styles.map} initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,
-            }}>
-              <Marker coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude, }} title="Localização atual" description="Esta é a sua localização atual" />
-            </MapView>
-          </ThemedView>
-        )}
-        <ScrollView horizontal={true} style={styles.rowServices} showsHorizontalScrollIndicator={false}>
-          <ThemedView style={styles.servicesContainer}>
-            <TouchableOpacity style={styles.services} onPress={() => navigation.navigate("deliverypackage")}>
-              <FontAwesome5 name="box" size={48} color="#cd853f" />
+    <>
+      <ScrollView style={styles.scrollview}>
+        <TopBar />
+        <View style={styles.container}>
+          {location && (
+            <ThemedView style={styles.containerMap}>
+              <MapView style={styles.map} initialRegion={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,
+              }}>
+                <Marker coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude, }} title="Localização atual" description="Esta é a sua localização atual" />
+              </MapView>
+            </ThemedView>
+          )}
+          <ScrollView horizontal={true} style={styles.rowServices} showsHorizontalScrollIndicator={false}>
+            <ThemedView style={styles.servicesContainer}>
+              <TouchableOpacity style={styles.services} onPress={() => navigation.navigate("deliverypackage")}>
+                <FontAwesome5 name="box" size={48} color="#cd853f" />
+              </TouchableOpacity>
+              <ThemedText style={styles.serviceName}>Entrega</ThemedText>
+              <ThemedText style={styles.serviceName}>de pacotes</ThemedText>
+            </ThemedView>
+            <ThemedView style={styles.servicesContainer}>
+              <TouchableOpacity style={styles.services} onPress={() => navigation.navigate("mototaxi")}>
+                <FontAwesome6 name="motorcycle" size={50} color="#000" />
+              </TouchableOpacity>
+              <ThemedText style={styles.serviceName}>Moto</ThemedText>
+              <ThemedText style={styles.serviceName}>Táxi</ThemedText>
+            </ThemedView>
+            <ThemedView style={styles.servicesContainer}>
+              <TouchableOpacity style={styles.services} onPress={() => navigation.navigate("deliveryfood")}>
+                <Ionicons name="fast-food" size={50} color="#FA8072" />
+              </TouchableOpacity>
+              <ThemedText style={styles.serviceName}>Entrega</ThemedText>
+              <ThemedText style={styles.serviceName}> de Comida</ThemedText>
+            </ThemedView>
+          </ScrollView>
+          <ScrollView horizontal={true} style={{ width: "100%" }} showsHorizontalScrollIndicator={false}>
+            <ThemedView style={styles.item}>
+              <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
+              <ThemedText style={styles.title}>Viaje com Agilidade</ThemedText>
+              <ThemedText style={styles.subText}>Temos pilotos próprios e experientes, com boas avaliações.</ThemedText>
+              <FontAwesome5 name="motorcycle" size={40} color="black" style={styles.icon} />
+            </ThemedView>
+            <ThemedView style={styles.item}>
+              <Image source={require('../../assets/images/mapa.jpg')} style={styles.image} />
+              <ThemedText style={styles.title}>Acompanhe em tempo Real
+              </ThemedText>
+              <ThemedText style={styles.subText}>Compartilhe sua localização com amigos, ela sempre fica ativa durante uma corrida.</ThemedText>
+              <Ionicons name="location" size={40} color="black" style={styles.icon} />
+            </ThemedView>
+            <ThemedView style={styles.item}>
+              <ImageBackground source={require('../../assets/images/avaliacao.png')} style={styles.image}>
+                <ThemedView style={{ backgroundColor: "transparent", flexDirection: "row", bottom: -55 }}>
+                  <Ionicons name="star" size={40} color="yellow" />
+                  <Ionicons name="star" size={40} color="yellow" />
+                  <Ionicons name="star" size={40} color="yellow" />
+                  <Ionicons name="star" size={40} color="yellow" />
+                  <Ionicons name="star" size={40} color="yellow" />
+                </ThemedView>
+              </ImageBackground>
+              <ThemedText style={styles.title}>Avalie os pilotos</ThemedText>
+              <ThemedText style={styles.subText}>Avalie como foi a viagem, nos conte o que você achou.</ThemedText>
+              <Ionicons name="people" size={40} color="black" style={styles.icon} />
+            </ThemedView>
+          </ScrollView>
+          <ScrollView horizontal={true} style={{ width: "100%" }} showsHorizontalScrollIndicator={false}>
+            <TouchableOpacity style={styles.itemRowTwo}>
+              <Image source={require('../../assets/images/image.jpg')} style={styles.image} />
+              <ThemedText style={styles.title}>Adicione até 3 paradas</ThemedText>
+              <ThemedText style={styles.subTextRowTwo}>Precisa parar durante a viagem em algum lugar? Adicione paradas.</ThemedText>
+              <AntDesign name="pluscircleo" size={40} color="black" style={styles.icon} />
             </TouchableOpacity>
-            <ThemedText style={styles.serviceName}>Entrega</ThemedText>
-            <ThemedText style={styles.serviceName}>de pacotes</ThemedText>
-          </ThemedView>
-          <ThemedView style={styles.servicesContainer}>
-            <TouchableOpacity style={styles.services} onPress={() => navigation.navigate("mototaxi")}>
-              <FontAwesome6 name="motorcycle" size={50} color="#000" />
+            <TouchableOpacity style={styles.itemRowTwo} onPress={() => navigation.navigate("mototaxi")}>
+              <Image source={require('../../assets/images/loc.jpg')} style={styles.image} />
+              <ThemedText style={styles.title}>Vamos lá?!</ThemedText>
+              <ThemedText style={styles.subTextRowTwo}>Tudo pronto? Agora é só pedir um moto táxi!</ThemedText>
+              <Ionicons name="caret-forward-circle-outline" size={40} color="black" style={styles.icon} />
             </TouchableOpacity>
-            <ThemedText style={styles.serviceName}>Moto</ThemedText>
-            <ThemedText style={styles.serviceName}>Táxi</ThemedText>
-          </ThemedView>
-          <ThemedView style={styles.servicesContainer}>
-            <TouchableOpacity style={styles.services} onPress={() => navigation.navigate("deliveryfood")}>
-              <Ionicons name="fast-food" size={50} color="#FA8072" />
-            </TouchableOpacity>
-            <ThemedText style={styles.serviceName}>Entrega</ThemedText>
-            <ThemedText style={styles.serviceName}> de Comida</ThemedText>
-          </ThemedView>
-        </ScrollView>
-        <ScrollView horizontal={true} style={{ width: "100%" }} showsHorizontalScrollIndicator={false}>
-          <ThemedView style={styles.item}>
-            <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
-            <ThemedText style={styles.title}>Viaje com Agilidade</ThemedText>
-            <ThemedText style={styles.subText}>Temos pilotos próprios e experientes, com boas avaliações.</ThemedText>
-            <FontAwesome5 name="motorcycle" size={40} color="black" style={styles.icon} />
-          </ThemedView>
-          <ThemedView style={styles.item}>
-            <Image source={require('../../assets/images/mapa.jpg')} style={styles.image} />
-            <ThemedText style={styles.title}>Acompanhe em tempo Real
-            </ThemedText>
-            <ThemedText style={styles.subText}>Compartilhe sua localização com amigos, ela sempre fica ativa durante uma corrida.</ThemedText>
-            <Ionicons name="location" size={40} color="black" style={styles.icon} />
-          </ThemedView>
-          <ThemedView style={styles.item}>
-            <ImageBackground source={require('../../assets/images/avaliacao.png')} style={styles.image}>
-              <ThemedView style={{ backgroundColor: "transparent", flexDirection: "row", bottom: -55 }}>
-                <Ionicons name="star" size={40} color="yellow" />
-                <Ionicons name="star" size={40} color="yellow" />
-                <Ionicons name="star" size={40} color="yellow" />
-                <Ionicons name="star" size={40} color="yellow" />
-                <Ionicons name="star" size={40} color="yellow" />
-              </ThemedView>
-            </ImageBackground>
-            <ThemedText style={styles.title}>Avalie os pilotos</ThemedText>
-            <ThemedText style={styles.subText}>Avalie como foi a viagem, nos conte o que você achou.</ThemedText>
-            <Ionicons name="people" size={40} color="black" style={styles.icon} />
-          </ThemedView>
-        </ScrollView>
-        <ScrollView horizontal={true} style={{ width: "100%" }} showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity style={styles.itemRowTwo}>
-            <Image source={require('../../assets/images/image.jpg')} style={styles.image} />
-            <ThemedText style={styles.title}>Adicione até 3 paradas</ThemedText>
-            <ThemedText style={styles.subTextRowTwo}>Precisa parar durante a viagem em algum lugar? Adicione paradas.</ThemedText>
-            <AntDesign name="pluscircleo" size={40} color="black" style={styles.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.itemRowTwo} onPress={() => navigation.navigate("mototaxi")}>
-            <Image source={require('../../assets/images/loc.jpg')} style={styles.image} />
-            <ThemedText style={styles.title}>Vamos lá?!</ThemedText>
-            <ThemedText style={styles.subTextRowTwo}>Tudo pronto? Agora é só pedir um moto táxi!</ThemedText>
-            <Ionicons name="caret-forward-circle-outline" size={40} color="black" style={styles.icon} />
-          </TouchableOpacity>
-        </ScrollView>
+          </ScrollView>
 
-        { /* <ThemedView style={styles.containerPopUp}>
+          { /* <ThemedView style={styles.containerPopUp}>
           <ThemedText style={styles.messagePopUp}>Para onde vamos?</ThemedText>
           <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("mototaxi")}>
             <Fontisto name="motorcycle" size={40} color="black" />
           </TouchableOpacity>
         </ThemedView>*/}
-      </View>
-      <StatusBar style="auto" />
+        </View>
 
-    </ScrollView>
+      </ScrollView>
+      <StatusBar style="auto" />
+      </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: '100%',
+    height: "100%",
     justifyContent: 'center',
     alignItems: 'center',
   },

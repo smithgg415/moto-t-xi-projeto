@@ -69,7 +69,7 @@ export default function Activities() {
           data={atividadesData}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.scroll}
+          contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}
         />
       </ThemedView>
     </GestureHandlerRootView>

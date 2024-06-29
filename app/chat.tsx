@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   motoqueiroMessage: {
     alignSelf: 'flex-start',
-    backgroundColor: '#e5e5ea',
+    backgroundColor: 'gray',
   },
   messageText: {
     color: 'white',
