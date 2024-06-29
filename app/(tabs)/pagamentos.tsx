@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, FlatList, Image, Platform, Button, TouchableOpacity, Animated } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native';
+import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import TopBar from '@/components/TopBar';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface Payment {
   id: string;
@@ -12,51 +13,54 @@ interface Payment {
   amount: string;
 }
 
-
 const Payments = () => {
-
   const [paymentData, setPaymentData] = useState<Payment[]>([
     { id: '1', date: '2023-01-01', description: 'Moto Táxi', amount: 'R$ 14,50' },
-  ])
+  ]);
 
   const addPayment = () => {
-    const id = paymentData.length + 1;
+    const id = (paymentData.length + 1).toString();
     const date = (new Date()).toISOString().split('T')[0];
     const description = Math.random() < 0.5 ? 'Moto Táxi' : 'Entrega de Pacote';
     const amount = "R$ " + (Math.random() * 100).toFixed(2);
-    setPaymentData(oldData => [...oldData, { id: id.toString(), date, description, amount }])
-  }
+    setPaymentData(oldData => [...oldData, { id, date, description, amount }]);
+  };
 
   const removePayment = (id: string) => {
-    setPaymentData(oldData => oldData.filter(item => item.id !== id))
-  }
-  const renderItem = ({ item }: { item: { id: string, date: string, description: string, amount: string } }) => (
-    <View style={styles.itemContainer}>
-      <Ionicons name="cash" size={32} color="green" style={styles.icon} />
-      <View style={styles.itemTextContainer}>
-        <ThemedText style={styles.itemText}>{item.description}</ThemedText>
-        <ThemedText style={styles.itemSubText}>{item.date}</ThemedText>
-      </View>
-      <ThemedText style={styles.itemAmount}>{item.amount}</ThemedText>
-      <TouchableOpacity style={{ backgroundColor: "red", padding: 5, borderRadius: 5, marginLeft: 5, alignItems:"center" }} onPress={() => removePayment(item.id)}>
-        <ThemedText>
-          <Ionicons name="trash" size={32} color="white" style={styles.icon} />
-        </ThemedText>
-      </TouchableOpacity>
-    </View>
+    setPaymentData(oldData => oldData.filter(item => item.id !== id));
+  };
+
+  const renderRightActions = (id: string) => (
+    <TouchableOpacity
+      style={styles.deleteButton}
+      onPress={() => removePayment(id)}
+    >
+      <Ionicons name="trash" size={32} color="white" />
+    </TouchableOpacity>
   );
 
-
-
+  const renderItem = ({ item }: { item: Payment }) => (
+    <Swipeable
+      renderRightActions={() => renderRightActions(item.id)}
+    >
+      <View style={styles.itemContainer}>
+        <Ionicons name="cash" size={32} color="green" style={styles.icon} />
+        <View style={styles.itemTextContainer}>
+          <ThemedText style={styles.itemText}>{item.description}</ThemedText>
+          <ThemedText style={styles.itemSubText}>{item.date}</ThemedText>
+        </View>
+        <ThemedText style={styles.itemAmount}>{item.amount}</ThemedText>
+      </View>
+    </Swipeable>
+  );
 
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       <TopBar />
       <ThemedView style={styles.containerText}>
         <ThemedText style={styles.text}>Histórico de Pagamentos</ThemedText>
-
         <ThemedView style={styles.btn}>
-          <TouchableOpacity onPress={() => { addPayment() }} style={styles.buttonAdd}>
+          <TouchableOpacity onPress={addPayment} style={styles.buttonAdd}>
             <Ionicons name="add-circle" size={24} color="#fff" />
           </TouchableOpacity>
         </ThemedView>
@@ -67,9 +71,9 @@ const Payments = () => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
       />
-    </View>
+    </GestureHandlerRootView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -86,11 +90,11 @@ const styles = StyleSheet.create({
   containerText: {
     backgroundColor: 'transparent',
     padding: 10,
-    top: 50
+    top: 50,
   },
   listContainer: {
     padding: 10,
-    top: 100
+    top: 100,
   },
   itemContainer: {
     flexDirection: 'row',
@@ -131,7 +135,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     width: 100,
-  }
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 70,
+    height:70,
+    borderRadius:10,
+    marginLeft:10,
+    top:10,
+  },
 });
 
 export default Payments;
