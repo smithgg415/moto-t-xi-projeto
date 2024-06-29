@@ -96,13 +96,13 @@ export default function HomeScreen() {
         </ScrollView>
         <ScrollView horizontal={true} style={{ width: "100%" }} showsHorizontalScrollIndicator={false}>
           <TouchableOpacity style={styles.itemRowTwo}>
-            <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
+            <Image source={require('../../assets/images/image.jpg')} style={styles.image} />
             <ThemedText style={styles.title}>Adicione até 3 paradas</ThemedText>
             <ThemedText style={styles.subTextRowTwo}>Precisa parar durante a viagem em algum lugar? Adicione paradas.</ThemedText>
             <AntDesign name="pluscircleo" size={40} color="black" style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemRowTwo} onPress={() => navigation.navigate("mototaxi")}>
-            <Image source={require('../../assets/images/moto.jpg')} style={styles.image} />
+            <Image source={require('../../assets/images/loc.jpg')} style={styles.image} />
             <ThemedText style={styles.title}>Vamos lá?!</ThemedText>
             <ThemedText style={styles.subTextRowTwo}>Tudo pronto? Agora é só pedir um moto táxi!</ThemedText>
             <Ionicons name="caret-forward-circle-outline" size={40} color="black" style={styles.icon} />
