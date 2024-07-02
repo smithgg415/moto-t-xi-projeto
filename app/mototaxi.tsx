@@ -49,22 +49,46 @@ export default function MotoTaxi() {
     setModalVisible(false);
     setConfirmationVisible(true);
 
-      await Notify.scheduleNotificationAsync({
-        content: {
-          title: "Pedido confirmado",
-          body: "Aguarde atualizações!",
-          data: {}
-        },
-        trigger: {
-          seconds: 5
-        }
-      });
-    }
+    await Notify.scheduleNotificationAsync({
+      content: {
+        title: "Pedido confirmado",
+        body: "Aguarde atualizações!",
+        data: {}
+      },
+      trigger: {
+        seconds: 5
+      }
+    });
+  }
 
-  const handleMismatchConfirm = () => {
+  const handleMismatchConfirm = async () => {
     setAddressMismatchVisible(false);
     setModalVisible(true);
+
+    await Notify.scheduleNotificationAsync({
+      content: {
+        title: "Pedido confirmado",
+        body: "Aguarde atualizações!",
+        data: {}
+      },
+      trigger: {
+        seconds: 5
+      }
+    });
   };
+
+  const handleCancelNotification = async () => {
+    await Notify.scheduleNotificationAsync({
+      content: {
+        title: "Moto Táxi cancelado",
+        body: "Atualize o endereço de partida e tente novamente.",
+        data: {}
+      },
+      trigger: {
+        seconds: 1
+      }
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -115,7 +139,7 @@ export default function MotoTaxi() {
           <TouchableOpacity style={styles.modalButton} onPress={handleMismatchConfirm}>
             <Text style={styles.modalButtonText}>Sim</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.modalButton, styles.cancelButton]} onPress={() => setAddressMismatchVisible(false)}>
+          <TouchableOpacity style={[styles.modalButton, styles.cancelButton]} onPress={() => { setAddressMismatchVisible(false); handleCancelNotification(); }}>
             <Text style={styles.modalButtonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>

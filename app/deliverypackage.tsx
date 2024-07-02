@@ -6,6 +6,7 @@ import TopBar from '@/components/TopBar';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Modal from 'react-native-modal';
+import * as Notify from 'expo-notifications';
 
 export default function DeliveryPackage() {
   const [width, setWidth] = useState('');
@@ -85,8 +86,28 @@ export default function DeliveryPackage() {
   const confirmOrder = () => {
     setModalVisible(false);
     Alert.alert('Pedido Confirmado', `Endereço de Retirada: ${pickupLocation}\nEndereço de Entrega: ${deliveryLocation}\nMedidas: ${width}cm x ${height}cm\nPeso: ${weight}kg`);
+    Notify.scheduleNotificationAsync({
+      content: {
+        title: 'Moto Táxi a caminho!',
+        body: 'Aguarde atualizações.',
+      },
+      trigger: {
+        seconds: 3,
+      },
+    });
   };
-
+  const handleCancelEntrega = async () =>{
+    await Notify.scheduleNotificationAsync({
+      content: {
+        title: "Entrega cancelada",
+        body: "Atualize o endereço de retirada e tente novamente.",
+        data: {}
+      },
+      trigger: {
+        seconds: 1
+      }
+    });
+  }
   return (
     <View style={styles.container}>
       <TopBar />
@@ -150,8 +171,8 @@ export default function DeliveryPackage() {
           <TouchableOpacity style={styles.modalButton} onPress={() => { setConfirmationVisible(false); setModalVisible(true); }}>
             <Text style={styles.modalButtonText}>Sim</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.modalButton} onPress={() => setConfirmationVisible(false)}>
-            <Text style={styles.modalButtonText}>Não</Text>
+          <TouchableOpacity style={[styles.modalButton, styles.cancelModalButton]} onPress={() => {setConfirmationVisible(false); handleCancelEntrega();}}>
+            <Text style={styles.modalButtonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -258,6 +279,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   modalButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  cancelModalButton: {
+    backgroundColor:"red",
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',

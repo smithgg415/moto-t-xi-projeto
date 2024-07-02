@@ -6,6 +6,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Modal from 'react-native-modal';
+import * as Notify from 'expo-notifications';
 
 export default function DeliveryFood() {
   const [restaurantName, setRestaurantName] = useState('');
@@ -43,16 +44,37 @@ export default function DeliveryFood() {
     }
   };
 
-  const confirmOrder = () => {
+  const confirmOrder = async () => {
     setModalVisible(false);
     setConfirmationVisible(true);
-  };
 
+    await Notify.scheduleNotificationAsync({
+      content: {
+        title: "Pedido confirmado",
+        body: "Aguarde atualizações!",
+        data: {}
+      },
+      trigger: {
+        seconds: 3
+      }
+    });
+  };
   const handleMismatchConfirm = () => {
     setAddressMismatchVisible(false);
     setModalVisible(true);
   };
-
+  const handleCancelarEntrega = async () => {
+    await Notify.scheduleNotificationAsync({
+      content: {
+        title: "Moto Táxi Cancelado",
+        body: "Atualize o endereço de partida e tente novamente!",
+        data: {}
+      },
+      trigger: {
+        seconds: 3
+      }
+    });
+  }
   return (
     <View style={styles.container}>
       <TopBar />
@@ -109,7 +131,7 @@ export default function DeliveryFood() {
           <TouchableOpacity style={styles.modalButton} onPress={handleMismatchConfirm}>
             <Text style={styles.modalButtonText}>Sim</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.modalButton, styles.cancelButton]} onPress={() => setAddressMismatchVisible(false)}>
+          <TouchableOpacity style={[styles.modalButton, styles.cancelButton]} onPress={() => {setAddressMismatchVisible(false); handleCancelarEntrega()}}>
             <Text style={styles.modalButtonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>
