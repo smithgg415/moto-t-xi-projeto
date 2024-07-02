@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import * as Notify from 'expo-notifications';
 
 import DeliveryFood from './deliveryfood';
 import DeliveryPackage from './deliverypackage';

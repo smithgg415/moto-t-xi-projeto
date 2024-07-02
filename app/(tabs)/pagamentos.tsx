@@ -21,28 +21,39 @@ const Payments = () => {
   const addPayment = () => {
     const id = (paymentData.length + 1).toString();
     const date = (new Date()).toISOString().split('T')[0];
-    const description = Math.random() < 0.5 ? 'Moto Táxi' : 'Entrega de Pacote';
+    let description = "";
     const amount = "R$ " + (Math.random() * 100).toFixed(2);
+    const amountNumber = parseFloat(amount.replace("R$ ", ""));
+    if(amountNumber > 30){
+      description = "Entrega de Pacote";
+    }
+    else{
+      description = "Moto Táxi";
+    }
     setPaymentData(oldData => [...oldData, { id, date, description, amount }]);
   };
-
   const removePayment = (id: string) => {
     setPaymentData(oldData => oldData.filter(item => item.id !== id));
   };
+  /*
+  const [iconColor, setIconColor] = useState("green");
+  const toggleIconColor = () => {
+    setIconColor(prevColor => prevColor === "green" ? "silver" : "green");
+  }*/
 
   const renderRightActions = (id: string) => (
-    <TouchableOpacity
-      style={styles.deleteButton}
-      onPress={() => removePayment(id)}
-    >
-      <Ionicons name="trash" size={32} color="white" />
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity style={styles.deleteButton} onPress={() => removePayment(id)}>
+        <Ionicons name="trash" size={32} color="white" />
+      </TouchableOpacity>{/*
+      <TouchableOpacity style={styles.deleteButton} onPress={toggleIconColor}>
+        <Ionicons name="archive" size={32} color="white" />
+      </TouchableOpacity>*/}
+    </>
   );
 
   const renderItem = ({ item }: { item: Payment }) => (
-    <Swipeable
-      renderRightActions={() => renderRightActions(item.id)}
-    >
+    <Swipeable renderRightActions={() => renderRightActions(item.id)}>
       <View style={styles.itemContainer}>
         <Ionicons name="cash" size={32} color="green" style={styles.icon} />
         <View style={styles.itemTextContainer}>
@@ -141,10 +152,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 70,
-    height:70,
-    borderRadius:10,
-    marginLeft:10,
-    top:10,
+    height: 70,
+    borderRadius: 10,
+    marginLeft: 10,
+    top: 10,
   },
 });
 

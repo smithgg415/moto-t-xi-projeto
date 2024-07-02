@@ -34,8 +34,8 @@ export default function DeliveryPackage() {
       let location = await Location.getCurrentPositionAsync({});
       const address = await Location.reverseGeocodeAsync(location.coords);
       if (address.length > 0) {
-        const { street, name, city, region, postalCode } = address[0];
-        const formattedAddress = `${street}, ${name}, ${city}, ${region}, ${postalCode}`;
+        const { street, name } = address[0];
+        const formattedAddress = `${street}, ${name}`;
         setCurrentLocation(formattedAddress);
         setPickupLocation(formattedAddress);
       }
@@ -228,6 +228,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   modalContent: {
+    
+    height:500,
+    width: 400,
+    bottom:-400,
+    left:-23,
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,

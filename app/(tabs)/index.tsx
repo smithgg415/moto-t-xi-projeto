@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, View, TouchableOpacity, Image, ImageBackground, Touchable } from 'react-native';
+import { StyleSheet, ScrollView, View, TouchableOpacity, Image, ImageBackground, Modal } from 'react-native';
 import TopBar from '@/components/TopBar';
 import React, { useEffect, useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
@@ -10,10 +10,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
-
+import * as Notify from 'expo-notifications';
 
 export default function HomeScreen() {
+  
+  Notify.setNotificationHandler ({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
+  });
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -26,7 +35,10 @@ export default function HomeScreen() {
       setLocation(location);
     })();
   }, []);
+
   const navigation = useNavigation();
+  // const [modalVisible, setModalVisible] = useState(true);
+
   return (
     <>
       <ScrollView style={styles.scrollview}>
@@ -36,9 +48,11 @@ export default function HomeScreen() {
             <ThemedView style={styles.containerMap}>
               <MapView style={styles.map} initialRegion={{
                 latitude: location.coords.latitude,
-                longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,
+                longitude: location.coords.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
               }}>
-                <Marker coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude, }} title="Localização atual" description="Esta é a sua localização atual" />
+                <Marker coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude }} title="Localização atual" description="Esta é a sua localização atual" />
               </MapView>
             </ThemedView>
           )}
@@ -108,22 +122,94 @@ export default function HomeScreen() {
               <Ionicons name="caret-forward-circle-outline" size={40} color="black" style={styles.icon} />
             </TouchableOpacity>
           </ScrollView>
-
-          { /* <ThemedView style={styles.containerPopUp}>
-          <ThemedText style={styles.messagePopUp}>Para onde vamos?</ThemedText>
-          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("mototaxi")}>
-            <Fontisto name="motorcycle" size={40} color="black" />
-          </TouchableOpacity>
-        </ThemedView>*/}
         </View>
-
+        {/*
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <ImageBackground source={require('../../assets/images/avaliacao.png')} style={styles.modalImage}>
+                <ThemedText style={styles.modalTitle}>Peça sua corrida agora mesmo!</ThemedText>
+                <ThemedText style={styles.modalDescription}>Rápido, seguro e com pilotos avaliados. Solicite já!</ThemedText>
+              </ImageBackground>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Ionicons name="close" size={24} color="white" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        */}
       </ScrollView>
       <StatusBar style="auto" />
-      </>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  // centeredView: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   marginTop: 22,
+  // },
+  // modalView: {
+  //   margin: 20,
+  //   backgroundColor: 'white',
+  //   borderRadius: 20,
+  //   padding: 35,
+  //   height: 600,
+  //   width: 350,
+  //   alignItems: 'center',
+  //   elevation: 10,
+  //   shadowColor: '#000',
+  //   shadowOffset: { width: 0, height: 2 },
+  //   shadowOpacity: 0.3,
+  //   shadowRadius: 4,
+  // },
+  // button: {
+  //   borderRadius: 20,
+  //   padding: 10,
+  //   elevation: 2,
+  // },
+  // buttonClose: {
+  //   backgroundColor: 'red',
+  //   position: "absolute",
+  //   right: -5,
+  //   top: -10,
+  //   height: 50,
+  //   width: 50,
+  //   borderRadius: 50,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
+  // modalImage: {
+  //   width: 300,
+  //   height: 500,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
+  // modalTitle: {
+  //   textAlign: 'center',
+  //   fontSize: 24,
+  //   fontWeight: 'bold',
+  //   color: 'white',
+  //   marginBottom: 10,
+  // },
+  // modalDescription: {
+  //   textAlign: 'center',
+  //   fontSize: 18,
+  //   color: 'white',
+  //   marginBottom: 20,
+  // },
   container: {
     flex: 1,
     height: "100%",
@@ -140,7 +226,6 @@ const styles = StyleSheet.create({
     height: 100,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-
   },
   containerMap: {
     marginTop: 100,
@@ -157,7 +242,7 @@ const styles = StyleSheet.create({
   rowServices: {
     backgroundColor: "transparent",
     flexDirection: 'row',
-    marginBottom: 20
+    marginBottom: 20,
   },
   services: {
     margin: 10,
@@ -176,37 +261,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 25,
     color: "white",
-    fontWeight: 'bold'
-  },
-  containerPopUp: {
-    position: "absolute",
-    marginTop: 120,
-    right: 10,
-    bottom: 0,
-    backgroundColor: "transparent",
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-    display: "flex",
-    flexDirection: "row"
-  },
-  btn: {
-    width: 70,
-    height: 70,
-    backgroundColor: 'yellow',
-    padding: 15,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  messagePopUp: {
-    backgroundColor: "yellow",
-    fontSize: 20,
-    color: "black",
-    padding: 10,
-    borderRadius: 10,
     fontWeight: 'bold',
-    marginRight: 5
   },
   item: {
     width: 300,
@@ -242,11 +297,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   subTextRowTwo: {
-
     top: -18,
     fontSize: 15,
     textAlign: 'justify',
     padding: 10,
     color: 'gray',
-  }
+  },
 });

@@ -6,12 +6,14 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Modal from 'react-native-modal';
+import * as Notify from 'expo-notifications';
 
 export default function MotoTaxi() {
+
   const [currentLocation, setCurrentLocation] = useState('');
   const [pickupLocation, setPickupLocation] = useState('');
   const [destinationLocation, setDestinationLocation] = useState('');
-  
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [isConfirmationVisible, setConfirmationVisible] = useState(false);
   const [isAddressMismatchVisible, setAddressMismatchVisible] = useState(false);
@@ -27,8 +29,8 @@ export default function MotoTaxi() {
       let location = await Location.getCurrentPositionAsync({});
       const address = await Location.reverseGeocodeAsync(location.coords);
       if (address.length > 0) {
-        const { street, name, city, region, postalCode } = address[0];
-        const formattedAddress = `${street}, ${name}, ${city}, ${region}, ${postalCode}`;
+        const { street, name } = address[0];
+        const formattedAddress = `${street}, ${name}`;
         setCurrentLocation(formattedAddress);
         setPickupLocation(formattedAddress);
       }
@@ -43,10 +45,21 @@ export default function MotoTaxi() {
     }
   };
 
-  const confirmOrder = () => {
+  const confirmOrder = async () => {
     setModalVisible(false);
     setConfirmationVisible(true);
-  };
+
+      await Notify.scheduleNotificationAsync({
+        content: {
+          title: "Pedido confirmado",
+          body: "Aguarde atualizações!",
+          data: {}
+        },
+        trigger: {
+          seconds: 5
+        }
+      });
+    }
 
   const handleMismatchConfirm = () => {
     setAddressMismatchVisible(false);
@@ -164,6 +177,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   modalContent: {
+    height: 500,
+    width: 400,
+    bottom: -400,
+    left: -23,
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,

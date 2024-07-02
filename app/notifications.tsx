@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, TouchableOpacity, FlatList, Text } from 'react-native';
+import { StyleSheet, ScrollView, View, TouchableOpacity, FlatList, Text, Button, Image } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import * as Notify from 'expo-notifications';
 
 const notifications = [
   {
@@ -35,7 +36,7 @@ const notifications = [
     time: '1 hora atrás',
   },
   {
-    
+
     id: '5',
     title: 'Moto Táxi cancelado',
     content: 'Seu pedido foi cancelado.',
@@ -43,8 +44,21 @@ const notifications = [
     time: '3 horas atrás',
   }
 ];
+let nome = "Luís";
 
 export default function Notifications() {
+  const handleNotificationLocal = async () => {
+    await Notify.scheduleNotificationAsync({
+      content: {
+        title: `Se arrume, ${nome}!`,
+        body: "Seu moto táxi está a caminho!",
+        data: {}
+      },
+      trigger: {
+        seconds: 1
+      }
+    });
+  }
   const renderItem = ({ item }: { item: typeof notifications[number] }) => (
     <View style={styles.notification}>
       <Ionicons name={item.icon as any} size={40} color="black" style={styles.notificationIcon} />
@@ -65,12 +79,14 @@ export default function Notifications() {
       </ThemedView>
       <ThemedView style={styles.containerText}>
       </ThemedView>
+      <Button title="Enviar Notificação " onPress={handleNotificationLocal} />
       <FlatList
         data={notifications}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.notificationsList}
       />
+      
     </View>
   );
 }

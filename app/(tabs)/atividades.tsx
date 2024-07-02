@@ -14,7 +14,7 @@ interface Activity {
 
 export default function Activities() {
   const [atividadesData, setAtividadesData] = useState<Activity[]>([
-    { id: "1", title: 'Moto Táxi', date: '2000-03-21' },
+    { id: "1", title: 'Moto Táxi', date: '2024-06-29' },
   ]);
 
   const addAtividades = () => {
