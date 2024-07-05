@@ -84,9 +84,7 @@ export default function MotoTaxi() {
         body: "Atualize o endereço de partida e tente novamente.",
         data: {}
       },
-      trigger: {
-        seconds: 1
-      }
+      trigger:null
     });
   }
 

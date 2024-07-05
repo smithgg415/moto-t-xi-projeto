@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "codespaces-blank",
-    "slug": "codespaces-blank",
+    "name": "Giacomelli App",
+    "slug": "mototaxi-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/loc.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logomototaxi.png",
         "backgroundColor": "yellow"
-      }
+      },
+      "package": "com.smithgg.mototaxiapp"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "5ee9caa5-9d48-4d22-97a0-f92e6a77059a"
+      }
     }
   }
 }

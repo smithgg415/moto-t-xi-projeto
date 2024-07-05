@@ -70,10 +70,8 @@ export default function DeliveryFood() {
         body: "Atualize o endereço de partida e tente novamente!",
         data: {}
       },
-      trigger: {
-        seconds: 3
-      }
-    });
+      trigger: null
+       });
   }
   return (
     <View style={styles.container}>

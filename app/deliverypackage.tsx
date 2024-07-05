@@ -103,9 +103,7 @@ export default function DeliveryPackage() {
         body: "Atualize o endereço de retirada e tente novamente.",
         data: {}
       },
-      trigger: {
-        seconds: 1
-      }
+      trigger: null
     });
   }
   return (
