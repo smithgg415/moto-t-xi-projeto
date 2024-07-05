@@ -42,7 +42,7 @@ export default function DeliveryPackage() {
       }
     })();
   }, []);
-  
+
   const handleOrder = () => {
     const widthValue = parseFloat(width);
     const heightValue = parseFloat(height);
@@ -96,7 +96,7 @@ export default function DeliveryPackage() {
       },
     });
   };
-  const handleCancelEntrega = async () =>{
+  const handleCancelEntrega = async () => {
     await Notify.scheduleNotificationAsync({
       content: {
         title: "Entrega cancelada",
@@ -169,7 +169,7 @@ export default function DeliveryPackage() {
           <TouchableOpacity style={styles.modalButton} onPress={() => { setConfirmationVisible(false); setModalVisible(true); }}>
             <Text style={styles.modalButtonText}>Sim</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.modalButton, styles.cancelModalButton]} onPress={() => {setConfirmationVisible(false); handleCancelEntrega();}}>
+          <TouchableOpacity style={[styles.modalButton, styles.cancelModalButton]} onPress={() => { setConfirmationVisible(false); handleCancelEntrega(); }}>
             <Text style={styles.modalButtonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>
@@ -247,11 +247,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   modalContent: {
-    
-    height:500,
+
+    height: 500,
     width: 400,
-    bottom:-400,
-    left:-23,
+    bottom: -400,
+    left: -23,
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   cancelModalButton: {
-    backgroundColor:"red",
+    backgroundColor: "red",
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',

@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/loc.jpg",
-    "scheme": "myapp",
+    "scheme": "Moto Táxi",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/logomototaxi.png",

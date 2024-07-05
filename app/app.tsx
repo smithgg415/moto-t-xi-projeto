@@ -3,10 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Notify from 'expo-notifications';
 
-import DeliveryFood from './deliveryfood';
-import DeliveryPackage from './deliverypackage';
-import MotoTaxi from './mototaxi';
-import Notifications from './notifications';
+import DeliveryFood from '../components/screens/deliveryfood';
+import DeliveryPackage from '../components/screens/deliverypackage';
+import MotoTaxi from '../components/screens/mototaxi';
+import Notifications from '../components/screens/notifications';
 
 const Stack = createStackNavigator();
 
